@@ -247,18 +247,24 @@ source = { virtual = "." }
 dependencies = [
     { name = "alembic" },
     { name = "fastapi" },
+    { name = "jinja2" },
+    { name = "python-multipart" },
     { name = "sqladmin" },
     { name = "sqlalchemy" },
     { name = "uvicorn" },
+    { name = "wtforms" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "alembic", specifier = ">=1.20.1" },
     { name = "fastapi", specifier = ">=0.162.0" },
+    { name = "jinja2", specifier = ">=3.1.6" },
+    { name = "python-multipart", specifier = ">=0.0.32" },
     { name = "sqladmin", specifier = ">=0.32.0" },
     { name = "sqlalchemy", specifier = ">=2.1.6" },
     { name = "uvicorn", specifier = ">=0.54.0" },
+    { name = "wtforms", specifier = ">=3.2.2" },
 ]
 
 [[package]]
