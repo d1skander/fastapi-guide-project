@@ -13,3 +13,8 @@ class UserModel(BaseModel):
         if self.password != self.password_repeat:
             raise ValueError('Passwords do not match')
         return self
+
+
+class UserAuthModel(BaseModel):
+    username: str = Field(min_length=3, max_length=20)
+    password: str = Field(min_length=8, max_length=20)
