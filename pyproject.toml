@@ -13,6 +13,7 @@ dependencies = [
     "python-multipart>=0.0.32",
     "sqladmin>=0.32.0",
     "sqlalchemy>=2.1.6",
+    "sqlalchemy-file>=0.7.0",
     "sqlalchemy-imageattach>=1.1.0",
     "uvicorn>=0.54.0",
     "wtforms>=3.2.2",
