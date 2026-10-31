@@ -11,10 +11,5 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-def get_db():
-    with SessionLocal() as db:
-        yield db
-
-
 def create_db():
     Base.metadata.create_all(bind=engine)

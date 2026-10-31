@@ -9,7 +9,7 @@ from typing import List
 import uuid
 
 #Модель пользователя
-class User(Base):
+class UserModel(Base):
     __tablename__ = "users"
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username: Mapped[str] = mapped_column(VARCHAR(20), nullable=False)

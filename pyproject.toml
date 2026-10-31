@@ -7,9 +7,11 @@ requires-python = ">=3.12"
 dependencies = [
     "a2wsgi>=1.10.10",
     "alembic>=1.20.1",
+    "bcrypt>=5.0.0",
     "dotenv>=0.9.9",
     "fastapi>=0.162.0",
     "jinja2>=3.1.6",
+    "pydantic-settings>=2.16.2",
     "pyjwt>=2.15.1",
     "python-multipart>=0.0.32",
     "sqladmin>=0.32.0",
