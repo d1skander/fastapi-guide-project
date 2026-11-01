@@ -22,7 +22,7 @@ app.include_router(users_router)
 
 
 os.makedirs("./files", 0o777, exist_ok=True)
-container = LocalStorageDriver("./files").get_container("images")
+container = LocalStorageDriver("./files").get_container("sight_picture")
 StorageManager.add_storage("default", container)
 
 

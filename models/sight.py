@@ -4,7 +4,7 @@ from sqlalchemy_file import FileField
 
 from models.base import Base
 
-from typing import List, BinaryIO
+from typing import List
 
 
 import uuid

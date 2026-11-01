@@ -42,7 +42,9 @@ def registration_user(username: Annotated[str, Form(min_length=3, max_length=20)
         data = UserShema(username=username, 
                      password=password, 
                      password_repeat=confirm).model_dump()
-        db.add(**data)
+        data = UserModel(username=username,
+                         password=password)
+        db.add(data)
         db.commit()
         return RedirectResponse(request.url_for("auth"), status_code=201)
     except ValueError:
