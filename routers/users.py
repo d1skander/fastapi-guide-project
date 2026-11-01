@@ -11,7 +11,7 @@ from forms.users import UserForm, UserAuthForm
 from shemas.users import UserModel as UserShema
 from shemas.users import UserAuthModel as UserAuthShema
 
-from core.dependencies import DB
+from core.dependencies import DB, CURRENT
 from core.config import CookieConfig, JWTConfig
 
 from models.users import UserModel
@@ -50,8 +50,7 @@ def registration_user(username: Annotated[str, Form(min_length=3, max_length=20)
 
 #Авторизация
 @router.get("/auth")
-def get_auth_page(request: Request,
-                  db: DB):
+def get_auth_page(request: Request):
     form = UserAuthForm()
     return templates.TemplateResponse(name='users/auth.html', request=request, context={"form": form})
 
@@ -82,5 +81,10 @@ def auth_user(username: Annotated[str, Form(min_length=3, max_length=20)],
 
 #Профиль
 @router.get("/profile")
-def get_profile_page(request: Request):
+def get_profile_page(request: Request,
+                     current: CURRENT,
+                     db: DB):
+    user = db.execute(select(UserModel).where(UserModel.id == current)).scalar_one_or_none()
+    if user is None:
+        return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "not found"}, status_code=404)
     return templates.TemplateResponse(name='users/profile.html', request=request)
