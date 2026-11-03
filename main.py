@@ -7,6 +7,8 @@ from libcloud.storage.drivers.local import LocalStorageDriver
 
 from routers.users import router as users_router
 
+from db.database import create_db
+
 
 import uvicorn
 import os
@@ -27,6 +29,7 @@ StorageManager.add_storage("default", container)
 
 
 if __name__ == "__main__":
+    create_db()
     uvicorn.run("main:app", 
                 port=5000, 
                 log_level="info")

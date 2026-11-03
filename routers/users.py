@@ -23,6 +23,8 @@ import jwt
 
 router = APIRouter(prefix="/users", tags=["Пользователи"])
 
+jwt_config = JWTConfig()
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -41,10 +43,10 @@ def registration_user(username: Annotated[str, Form(min_length=3, max_length=20)
     try:
         data = UserShema(username=username, 
                      password=password, 
-                     password_repeat=confirm).model_dump()
-        data = UserModel(username=username,
-                         password=password)
-        db.add(data)
+                     password_repeat=confirm)
+        new_data = UserModel(username=data.username,
+                             password=data.password)
+        db.add(new_data)
         db.commit()
         return RedirectResponse(request.url_for("auth"), status_code=201)
     except ValueError:
@@ -61,7 +63,6 @@ def auth_user(username: Annotated[str, Form(min_length=3, max_length=20)],
               password: Annotated[str, Form(min_length=8, max_length=20)],
               request: Request,
               db: DB,
-              config: JWTConfig,
               response: Response):
     try:
         data = UserAuthShema(username=username, 
@@ -70,7 +71,7 @@ def auth_user(username: Annotated[str, Form(min_length=3, max_length=20)],
         user = db.execute(stmt).scalar_one_or_none()
         if user is not None:
             if bcrypt.checkpw(data.password.encode("utf-8"), user.password.encode("utf-8")):
-                jwt_token = jwt.encode({"id": user.id}, config.key, config.algorithms)
+                jwt_token = jwt.encode({"id": user.id}, jwt_config.key, jwt_config.algorithm)
                 response.set_cookie(key="key", 
                                     value=jwt_token,
                                     max_age=86400,

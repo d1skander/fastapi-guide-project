@@ -25,4 +25,5 @@
     - sqlite
 
 
-Написал все, но не протестировал. Пока что думаю теперь исправлять всю эту кашу, которую создал, ведь ошибки летят и летят.
+Не нахожу решения для
+cursor.execute(statement, parameters) sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: users
