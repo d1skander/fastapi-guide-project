@@ -22,7 +22,4 @@
     - css
 
 - Database
-    - sqlite
-
-
-Я даже не тестил хехе
+    - postgre
