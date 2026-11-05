@@ -27,3 +27,9 @@ class DBConfig(ConfigBase):
     host: str
     port: int
     name: str
+
+
+class AdminConfig(ConfigBase):
+    model_config = SettingsConfigDict(env_prefix="admin_")
+    username: str
+    password: str

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
-from sqlalchemy import UUID, VARCHAR, Text, ForeignKey
-from sqlalchemy_file import FileField
+from sqlalchemy import UUID, VARCHAR, Text, ForeignKey, Column
+from sqlalchemy_file.types import FileField
 
 from models.base import Base
 
@@ -15,7 +15,7 @@ class SightModel(Base):
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(VARCHAR(), default="Название отсутствует.")
     description: Mapped[str] = mapped_column(Text())
-    pictures: Mapped[List["Picture"]] = relationship()
+    pictures: Mapped[List["Picture"]] = relationship("SightPicture")
 
 #Дочерняя модель достопримечательности(Модель изображений)
 class SightPicture(Base):

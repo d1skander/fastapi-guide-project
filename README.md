@@ -22,8 +22,4 @@
     - css
 
 - Database
-    - sqlite
-
-
-Не нахожу решения для
-cursor.execute(statement, parameters) sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: users
+    - postgre

@@ -8,9 +8,15 @@ from models.sight import SightPicture as st_picture
 
 from .admin_auth import AdminAuth
 
+from core.config import CookieConfig
+
+
+import itsdangerous
+
 
 def admin_setup(app, engine):
-    authentication_backend = AdminAuth(secret_key="secret")
+    cookie_config = CookieConfig()
+    authentication_backend = AdminAuth(secret_key=cookie_config.admin_secret_key.get_secret_value())
     admin = Admin(app, 
                   engine,
                   authentication_backend=authentication_backend)

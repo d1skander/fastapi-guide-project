@@ -48,7 +48,7 @@ def registration_user(username: Annotated[str, Form(min_length=3, max_length=20)
                              password=data.password)
         db.add(new_data)
         db.commit()
-        return RedirectResponse(request.url_for("auth"), status_code=201)
+        return RedirectResponse(request.url_for("get_auth_user"), status_code=201)
     except ValueError:
         return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "Value error, Passwords do not match"}, status_code=400)
 
@@ -78,7 +78,7 @@ def auth_user(username: Annotated[str, Form(min_length=3, max_length=20)],
                                     secure=True,
                                     httponly=True,
                                     samesite='lax')
-                return RedirectResponse(request.url_for("main"), status_code=201)
+                return RedirectResponse(request.url_for("get_profile_page"), status_code=201)
     except ValueError:
         return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "Incorrect login or password"}, status_code=400)
 
