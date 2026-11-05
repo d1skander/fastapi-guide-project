@@ -11,7 +11,7 @@ from models.users import UserModel
 db_condig = DBConfig()
 
 
-engine = create_engine(f"postgresql+psycopg2://{db_condig.user}:{db_condig.password}@{db_condig.host}:{db_condig.port}/{db_condig.name}")
+engine = create_engine(f"postgresql+psycopg2://{db_condig.user.get_secret_value()}:{db_condig.password.get_secret_value()}@{db_condig.host}:{db_condig.port}/{db_condig.name}")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 

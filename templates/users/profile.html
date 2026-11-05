@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <div class="user">
+        <ul>
+            <li>{{id}}</li>
+            <li>{{username}}</li>
+        </ul>
+    <div class="window">
+        <dialog id="editWindow">
+            
+            <details id="detailsUsername">
+                <summary>Изменить логин</summary>
+                <form action="">
+                <input type="text" title="Изменить">
+                </form>
+            </details>
+
+            <details id="detailsPassword">
+                <summary>Изменить пароль</summary>
+                <form action="">
+                <input type="password" title="Изменить">
+                </form>
+            </details>
+            <button id="editCancel" type="reset">Отменить</button>
+            
+        </dialog>
+    </div>
+    <div class="buttons">
+        <button id="editButton">Изменить профиль</button>
+        <button id="logout">Выйти</button>
+    </div>
+
+
+    <script src="{{ url_for('static', path='js/profile.js') }}"></script>
+</body>
+</html>

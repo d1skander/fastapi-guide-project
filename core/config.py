@@ -17,13 +17,13 @@ class CookieConfig(ConfigBase):
 class JWTConfig(ConfigBase):
     model_config = SettingsConfigDict(env_prefix="jwt_")
     key: SecretStr
-    algorithm: str
+    algorithm: SecretStr
 
 
 class DBConfig(ConfigBase):
     model_config = SettingsConfigDict(env_prefix="db_")
-    user: str
-    password: str
+    user: SecretStr
+    password: SecretStr
     host: str
     port: int
     name: str
@@ -31,5 +31,5 @@ class DBConfig(ConfigBase):
 
 class AdminConfig(ConfigBase):
     model_config = SettingsConfigDict(env_prefix="admin_")
-    username: str
-    password: str
+    username: SecretStr
+    password: SecretStr

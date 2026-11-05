@@ -4,11 +4,16 @@ from sqlalchemy import select
 from fastapi import Depends, Cookie, Request
 from fastapi.responses import RedirectResponse
 
-from typing import Annotated, Any
+from typing import Annotated
 
 from db.database import engine
 
 from models.users import UserModel
+
+from core.config import JWTConfig
+
+
+import jwt
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -22,36 +27,20 @@ def get_db():
 DB = Annotated[Session, Depends(get_db)]
 
 
-def check_cookie_and_get_current_user(request: Request,
-                 db: DB):
-    from routers.users import templates
+def check_cookie(jwt_cookie: Annotated[str | None, Cookie(alias="key")] = None):
+    if jwt_cookie is None:
+        raise ValueError("Cookie missing")
+    jwt_config = JWTConfig()
+    try:
+        payload = jwt.decode(jwt_cookie,
+                             jwt_config.key.get_secret_value(),
+                             [jwt_config.algorithm.get_secret_value()])
+        jwt_id = payload.get("id")
+        if jwt_id is None:
+            raise ValueError("problem in find")
+        return str(jwt_id)
+    except jwt.InvalidTokenError:
+         raise ValueError("problem in find")
 
-    import jwt
-
-    visit = Cookie()
-    if visit != None:
-        try:
-            payload = jwt.decode(visit)
-            id = payload.get("id")
-            token_data = str(id)
-            if id is None:
-                return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "problem in jwt"}, status_code=401)
-            token_data = str(id)
-        except jwt.InvalidTokenError:
-            return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "problem in jwt"}, status_code=401)
-        stmt = select(UserModel).where(UserModel.id == token_data)
-        result = db.execute(stmt).scalar_one_or_none()
-        if result is None:
-            return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "problem in find"}, status_code=401)
-        return result.id
-    else:
-        return RedirectResponse(request.url_for("auth"), status_code=201)
-
-
-def get_active_user(current: Annotated[UserModel, Depends(check_cookie_and_get_current_user)]):
-    if not current:
-        return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "no active"}, status_code=401)
-    return current
-
-
-CURRENT = Annotated[str, Depends(get_active_user)]
+#Просмотр сессий(куки)
+CHECK_COOKIE = Annotated[str, Depends(check_cookie)]

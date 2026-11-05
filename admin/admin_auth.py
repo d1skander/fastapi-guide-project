@@ -25,10 +25,10 @@ class AdminAuth(AuthenticationBackend):
         form = await request.form()
         username, password = form["username"], form["password"]
 
-        if username == self.admin_config.username and password == self.admin_config.password:
+        if username == self.admin_config.username.get_secret_value() and password == self.admin_config.password.get_secret_value():
             token = self.jwt.encode({"exp": self.datetime.now(tz=self.timezone.utc) + self.timedelta(minutes=30)}, 
                                     self.cookie_config.admin_secret_key.get_secret_value(),
-                                    algorithm=self.jwt_config.algorithm)
+                                    algorithm=self.jwt_config.algorithm.get_secret_value())
             request.session.update({"token": token})
             return True
         return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "Incorrect username and password"}, status_code=401)
@@ -43,7 +43,6 @@ class AdminAuth(AuthenticationBackend):
 
     async def authenticate(self, request: Request) -> RedirectResponse | bool | HTMLResponse:
         token = request.session.get("token")
-        print(token)
 
         if not token:
             return False
@@ -51,7 +50,7 @@ class AdminAuth(AuthenticationBackend):
         try:
             self.jwt.decode((token), 
                             self.cookie_config.admin_secret_key.get_secret_value(),
-                            algorithms=[self.jwt_config.algorithm])
+                            algorithms=[self.jwt_config.algorithm.get_secret_value()])
             return True
         except self.jwt.ExpiredSignatureError:
             return templates.TemplateResponse(name='errors.html', request=request, context={"errors": "The session has ended"}, status_code=403)
