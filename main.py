@@ -6,6 +6,7 @@ from sqlalchemy_file.storage import StorageManager
 from libcloud.storage.drivers.local import LocalStorageDriver
 
 from routers.users import router as users_router
+from routers.main import router as main_router
 
 from db.database import create_db, engine
 
@@ -23,11 +24,14 @@ app.mount("/static",
           name="static")
 
 app.include_router(users_router)
+app.include_router(main_router)
 
 
 os.makedirs("./files", 0o777, exist_ok=True)
-container = LocalStorageDriver("./files").get_container("sight_picture")
-StorageManager.add_storage("default", container)
+container_sight = LocalStorageDriver("./files").get_container("sight_picture")
+container_info = LocalStorageDriver("./files").get_container("info_picture")
+StorageManager.add_storage("storage_sight", container_sight)
+StorageManager.add_storage("storage_info", container_info)
 
 
 admin_setup(app, engine)

@@ -5,8 +5,8 @@ class UserForm(Form):
     username = StringField('Имя пользователя', 
                            [validators.Length(min=3, max=20)], 
                            name="username")
-    password = PasswordField('Новый пароль', [
-        validators.Length(min=3, max=20),
+    password = PasswordField('Пароль', [
+        validators.Length(min=8, max=20),
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Пароли должны совпадать')],
         name="password")
@@ -18,8 +18,20 @@ class UserAuthForm(Form):
     username = StringField('Имя пользователя', 
                            [validators.Length(min=3, max=20)], 
                            name="username")
-    password = PasswordField('Новый пароль', [
-        validators.Length(min=3, max=20),
+    password = PasswordField('Пароль', [
+        validators.Length(min=8, max=20),
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Пароли должны совпадать')],
-        name="password")
+        name="password"
+)
+
+class UserEditUsernameForm(Form):
+    username = StringField('Имя пользователя', 
+                           [validators.Length(min=3, max=20)], 
+                           name="username")
+
+
+class UserEditPasswordForm(Form):
+    password = StringField('Новый пароль', 
+                           [validators.Length(min=8, max=20)], 
+                           name="password")

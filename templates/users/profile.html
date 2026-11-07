@@ -16,24 +16,32 @@
             
             <details id="detailsUsername">
                 <summary>Изменить логин</summary>
-                <form action="">
-                <input type="text" title="Изменить">
+                <form method=post action="{{ url_for('new_username') }}">
+                    <dl>
+                        {{ user_form.username }}
+                    </dl>
+                    <button type="submit">Изменить</button>
                 </form>
             </details>
 
             <details id="detailsPassword">
                 <summary>Изменить пароль</summary>
-                <form action="">
-                <input type="password" title="Изменить">
+                <form method=post action="{{ url_for('new_password') }}">
+                    <dl>
+                        {{ password_form.password }}
+                    </dl>
+                    <button type="submit">Изменить</button>
                 </form>
             </details>
             <button id="editCancel" type="reset">Отменить</button>
-            
+
         </dialog>
     </div>
     <div class="buttons">
         <button id="editButton">Изменить профиль</button>
+        <form method="post" action="{{ url_for('logout') }}">
         <button id="logout">Выйти</button>
+        </form>
     </div>
 
 

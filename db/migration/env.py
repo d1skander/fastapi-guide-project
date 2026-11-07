@@ -17,8 +17,8 @@ section = config.config_ini_section
 
 db_config = DBConfig()
 
-config.set_section_option(section, "USER_DB", db_condig.user)
-config.set_section_option(section, "PASSWORD_DB", db_condig.password)
+config.set_section_option(section, "USER_DB", db_condig.user.get_secret_value())
+config.set_section_option(section, "PASSWORD_DB", db_condig.password.get_secret_value())
 config.set_section_option(section, "HOST_DB", db_condig.host)
 config.set_section_option(section, "PORT_DB", str(db_config.port))
 config.set_section_option(section, "NAME_DB", db_config.name)

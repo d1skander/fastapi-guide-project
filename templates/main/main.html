@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+</head>
+<body>
+    <nav class="menu">
+        <ul>
+            <li><a href="{{ url_for('get_main_page') }}">Главная</a></li>
+            <li><a href="{{ url_for('get_info_page') }}">О нас</a></li>
+        </ul>
+    </nav>
+
+    <dialog id="redirectDialog">
+        <a href="{{ url_for('get_registration_page') }}">Регистрация</a>
+        <a href="{{ url_for('get_auth_page') }}">Войти</a>
+        <button id="editCancel" type="reset">Выйти</button>
+    </dialog>
+
+    <div class="auth">
+    {% if state %}
+        <a href="{{ url_for('get_profile_page') }}">Профиль</a>
+    {% else %}
+        <button id="authButton">Войти</button>
+    {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html>

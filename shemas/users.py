@@ -29,3 +29,18 @@ class UserModel(BaseModel):
 class UserAuthModel(BaseModel):
     username: str = Field(min_length=3, max_length=20)
     password: str = Field(min_length=8, max_length=20)
+
+
+class UserEditUsernameModel(BaseModel):
+    username: str = Field(min_length=3, max_length=20)
+
+
+class UserEditPasswordModel(BaseModel):
+    password: str = Field(min_length=8, max_length=20)
+
+
+    @model_validator(mode='after')
+    def hash_password(self) -> Self:
+        hashed = bcrypt.hashpw(self.password.encode("utf-8"), bcrypt.gensalt())
+        self.password = hashed.decode("utf-8")
+        return self
