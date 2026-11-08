@@ -19,9 +19,14 @@ import os
 
 app = FastAPI()
 
+app.mount("/files/info_picture", StaticFiles(directory="./files/info_picture"), name="info_picture_files")
+
 app.mount("/static", 
           StaticFiles(directory="static"), 
           name="static")
+app.mount("/files",
+          StaticFiles(directory="files"),
+          name="files")
 
 app.include_router(users_router)
 app.include_router(main_router)

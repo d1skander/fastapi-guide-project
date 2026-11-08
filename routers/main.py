@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from sqlalchemy import select, update
+from sqlalchemy.orm import joinedload
 
 from typing import Annotated
 
@@ -52,8 +53,6 @@ def get_main_page(request: Request,
 @router.get("/info")
 def get_info_page(request: Request,
                   db: DB):
-       info = db.execute(select(InfoModel)).scalar_one_or_none()
-           
-       if info is not None:
-           return templates.TemplateResponse(name='main/info.html', request=request, context={"info": info})
-       return templates.TemplateResponse(name='main/info.html', request=request, context={"info": "Нет информации"})
+       stmt = select(InfoModel).options(joinedload(InfoModel.pictures))
+       info = db.scalars(stmt).first()
+       return templates.TemplateResponse(name='main/info.html', request=request, context={"info": info})

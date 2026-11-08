@@ -14,11 +14,12 @@ class InfoModel(Base):
     __tablename__ = "info"
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     description: Mapped[str] = mapped_column(Text())
-    pictures: Mapped[List["Picture"]] = relationship("SightPicture")
+    pictures: Mapped[List["InfoPicture"]] = relationship("InfoPicture", back_populates="info")
 
 #Дочерняя модель информации(Модель изображений)
 class InfoPicture(Base):
     __tablename__ = "info_picture"
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     info_id: Mapped[UUID] = mapped_column(ForeignKey("info.id"))
-    image = mapped_column(FileField)
+    info: Mapped["InfoModel"] = relationship("InfoModel", back_populates="pictures")
+    image = mapped_column(FileField(upload_storage="storage_info"))

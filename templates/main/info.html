@@ -13,5 +13,24 @@
         </ul>
     </nav>
     <p>Пусто пока что</p>
+    <ul>
+        {% for image in info.pictures %}
+            <li>
+                <img src="/files/info_picture/{{ image.id }}">
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+    {% for pic in info.pictures %}
+        <li>
+            <strong>Сырые данные поля image:</strong> {{ pic.image }} <br>
+            <strong>Попытка вывода пути:</strong> {{ pic.image.get('path') if pic.image is mapping else pic.image }}
+        </li>
+    {% else %}
+        <li>В базе данных вообще нет картинок для этой записи.</li>
+    {% endfor %}
+</ul>
+
 </body>
 </html>

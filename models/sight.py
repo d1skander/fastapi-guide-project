@@ -15,11 +15,12 @@ class SightModel(Base):
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(VARCHAR(), default="Название отсутствует.")
     description: Mapped[str] = mapped_column(Text())
-    pictures: Mapped[List["Picture"]] = relationship("SightPicture")
+    pictures: Mapped[List["SightPicture"]] = relationship("SightPicture", back_populates="sight")
 
 #Дочерняя модель достопримечательности(Модель изображений)
 class SightPicture(Base):
     __tablename__ = "sight_picture"
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sight_id: Mapped[UUID] = mapped_column(ForeignKey("sight.id"))
-    image = mapped_column(FileField)
+    sight: Mapped["SightModel"] = relationship("SightModel", back_populates="pictures")
+    image = mapped_column(FileField(upload_storage="storage_sight"))

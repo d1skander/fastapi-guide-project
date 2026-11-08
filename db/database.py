@@ -6,6 +6,7 @@ from core.config import DBConfig
 from models.base import Base
 from models.sight import SightModel, SightPicture
 from models.users import UserModel
+from models.info import InfoPicture, InfoModel
 
 
 db_condig = DBConfig()
