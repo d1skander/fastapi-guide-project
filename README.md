@@ -18,4 +18,9 @@
     - javascript
 
 - Database
-    - postgre
+    - sqlite
+
+## Готовые команды
+- uv run main/manage.py runserver
+- uv run main/manage.py migrate
+- uv run main/manage.py makemigrations

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,25 +9,25 @@
 <body>
     <nav class="menu">
         <ul>
-            <li><a href="{{ url_for('get_main_page') }}">Главная</a></li>
-            <li><a href="{{ url_for('get_info_page') }}">О нас</a></li>
+            <li><a href="{% url 'main' %}">Главная</a></li>
+            <li><a href="{% url 'info' %}">О нас</a></li>
         </ul>
     </nav>
 
     <dialog id="redirectDialog">
-        <a href="{{ url_for('get_registration_page') }}">Регистрация</a>
-        <a href="{{ url_for('get_auth_page') }}">Войти</a>
+        <a href="{% url 'reg' %}">Регистрация</a>
+        <a href="{% url 'auth' %}">Войти</a>
         <button id="editCancel" type="reset">Выйти</button>
     </dialog>
 
     <div class="auth">
-    {% if state %}
-        <a href="{{ url_for('get_profile_page') }}">Профиль</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}">{{ user.username }}</a>
     {% else %}
         <button id="authButton">Войти</button>
     {% endif %}
     </div>
 
-    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

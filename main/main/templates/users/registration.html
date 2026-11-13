@@ -6,13 +6,10 @@
     <title>Регистрация</title>
 </head>
 <body>
-    <form method=post action="{{ url_for('registration_user') }}">
-  <dl>
-    {{ form.username }}
-    {{ form.password }}
-    {{ form.confirm }}
-  </dl>
-  <button type="submit">Отправить</button>
-</form>
+    <form method=post action="{% url 'reg' %}">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Отправить</button>
+    </form>
 </body>
 </html>
