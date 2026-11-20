@@ -24,10 +24,33 @@
     {% if user.is_authenticated %}
         <a href="{% url 'profile' %}">{{ user.username }}</a>
     {% else %}
-        <button id="authButton">Войти</button>
+        <button type="button" id="authButton">Войти</button>
     {% endif %}
     </div>
 
-    <script src="js/main.js"></script>
+
+    <div class="sight">
+        <ul>
+            {% for i in form %}
+            <li>
+                <div class="image-wrapper">
+                    {% if i.image.url %}
+                        <a href="{% url 'sight' i.id %}">
+                            <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'sight' i.id %}">
+                            <img src="/image/default.png" alt="{{ i.name }}">
+                        </a>
+                    {% endif %}
+                    </div>
+                <div class="title">{{ i.name }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

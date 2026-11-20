@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/sight.css" rel="stylesheet">
+    <title>Достопримечательность</title>
+</head>
+<body class="bg-light">
+    <nav class="menu">
+        <ul>
+            <li><a href="{% url 'main' %}">Главная</a></li>
+            <li><a href="{% url 'info' %}">О нас</a></li>
+        </ul>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    
+                    {% if sight.image %}
+                        <img src="{{ sight.image.url }}" class="card-img-top img-fluid" alt="{{ form.name }}" style="max-height: 450px; object-fit: cover;">
+                    {% endif %}
+                    
+                    <div class="card-body p-4">
+                        <h1 class="card-title h2 mb-3">{{ sight.name }}</h1>
+                        <p class="card-text text-secondary" style="white-space: pre-line;">
+                            {{ sight.description }}
+                        </p>
+                        <a href="{{ sight.url_sight }}">Узнать маршрут</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

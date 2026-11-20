@@ -16,15 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', views.main, name="main"),
-    path('sight/', views.sight, name="sight"),
+    path('sight/<uuid:id>', views.sight, name="sight"),
     path('info/', views.info, name="info"),
     path('auth/', views.auth, name="auth"),
+    path('profile/', views.profile, name="profile"),
     path('registration/', views.registration, name="reg"),
-    path('profile/', views.profile, name="profile")
+    path('del_user/', views.delete_user, name="del"),
+    path('edit_email/', views.edit_email, name='new_email'),
+    path('edit_password/', views.edit_password, name='new_password'),
+    path('edit_username/', views.edit_username, name='new_username'),
+    path('exit/', views.exit, name='exit'),
 ]
+
+
+# Source - https://stackoverflow.com/q/72418504
+# Posted by TBS5596
+# Retrieved 2026-11-19, License - CC BY-SA 4.0
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

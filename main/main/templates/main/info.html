@@ -1,36 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/info.css" rel="stylesheet">
     <title>О нас</title>
 </head>
 <body>
     <nav class="menu">
-        <ul>
-            <li><a href="{{ url_for('get_main_page') }}">Главная</a></li>
-            <li><a href="{{ url_for('get_info_page') }}">О нас</a></li>
-        </ul>
+        <li><a href="{% url 'main' %}">Главная</a></li>
+        <li><a href="{% url 'info' %}">О нас</a></li>
     </nav>
-    <p>Пусто пока что</p>
+
+    <div class="info">
     <ul>
-        {% for image in info.pictures %}
+        {% for i in form %}
             <li>
-                <img src="/files/info_picture/{{ image.id }}">
+                <div class="image">
+                    {% if i.image.url %}
+                        <img src="{{ i.image.url }}">
+                    {% else %}
+                        <img src="/image/default.png">
+                    {% endif %}
+                </div>
+                <div class="title">{{ i.description }}</div>
             </li>
         {% endfor %}
     </ul>
-
-    <ul>
-    {% for pic in info.pictures %}
-        <li>
-            <strong>Сырые данные поля image:</strong> {{ pic.image }} <br>
-            <strong>Попытка вывода пути:</strong> {{ pic.image.get('path') if pic.image is mapping else pic.image }}
-        </li>
-    {% else %}
-        <li>В базе данных вообще нет картинок для этой записи.</li>
-    {% endfor %}
-</ul>
-
+</div>
 </body>
 </html>

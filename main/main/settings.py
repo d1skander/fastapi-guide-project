@@ -129,3 +129,17 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# Source - https://stackoverflow.com/q/72418504
+# Posted by TBS5596
+# Retrieved 2026-11-19, License - CC BY-SA 4.0
+
+MEDIA_URL = '/files/'
+
+MEDIA_ROOT = os.path.join(
+    BASE_DIR / 'files'
+)
+
+
+AUTH_USER_MODEL = 'app.CustomUser'

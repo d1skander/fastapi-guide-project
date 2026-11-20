@@ -6,6 +6,12 @@
     <title>Регистрация</title>
 </head>
 <body>
+    <nav class="menu">
+        <ul>
+            <li><a href="{% url 'main' %}">Главная</a></li>
+            <li><a href="{% url 'info' %}">О нас</a></li>
+        </ul>
+    </nav>
     <form method=post action="{% url 'reg' %}">
       {% csrf_token %}
       {{ form }}

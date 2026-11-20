@@ -1,22 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет</title>
+    <link rel="stylesheet" href="{% static 'css/users/profile.css' %}">
 </head>
 <body>
+    <nav class="menu">
+        <ul>
+            <li><a href="{% url 'main' %}">Главная</a></li>
+            <li><a href="{% url 'info' %}">О нас</a></li>
+        </ul>
+    </nav>
+
     <div class="user">
         <ul>
-            <li>{{id}}</li>
-            <li>{{username}}</li>
+            <li>{{ id }}</li>
+            <li>{{ username }}</li>
+            {% if mail == None %}
+                <li><p>Добавьте электронную почту</p></li>
+            {% else %}
+                <li>{{ email }}</li>
+            {% endif %}
         </ul>
+    </div>
+
     <div class="window">
         <dialog id="editWindow">
             
             <details id="detailsUsername">
                 <summary>Изменить логин</summary>
-                <form method=post action="{{ url_for('new_username') }}">
+                <form method="post" action="{% url 'new_username' %}">
+                    {% csrf_token %}
                     <dl>
                         {{ user_form.username }}
                     </dl>
@@ -24,27 +41,40 @@
                 </form>
             </details>
 
+            <details id="detailsEmail">
+                <summary>Изменить почту</summary>
+                <form method="post" action="{% url 'new_email' %}">
+                    {% csrf_token %}
+                    <dl>
+                        {{ user_form.email }}
+                    </dl>
+                    <button type="submit">Изменить</button>
+                </form>
+            </details>
+
             <details id="detailsPassword">
                 <summary>Изменить пароль</summary>
-                <form method=post action="{{ url_for('new_password') }}">
+                <form method="post" action="{% url 'new_password' %}">
+                    {% csrf_token %}
                     <dl>
                         {{ password_form.password }}
                     </dl>
                     <button type="submit">Изменить</button>
                 </form>
             </details>
-            <button id="editCancel" type="reset">Отменить</button>
 
+            <button id="editCancel" type="reset">Отменить</button>
         </dialog>
     </div>
+
     <div class="buttons">
         <button id="editButton">Изменить профиль</button>
-        <form method="post" action="{{ url_for('logout') }}">
-        <button id="logout">Выйти</button>
+        <form method="post" action="{% url 'exit' %}">
+            {% csrf_token %}
+            <button id="logout" type="submit">Выйти</button>
         </form>
     </div>
 
-
-    <script src="{{ url_for('static', path='js/profile.js') }}"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
 </body>
 </html>
