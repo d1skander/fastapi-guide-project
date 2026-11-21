@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/sight.css" rel="stylesheet">
+    <link href="{% static 'css/main/sight.css' %}" rel="stylesheet">
     <title>Достопримечательность</title>
 </head>
 <body class="bg-light">
@@ -30,6 +30,33 @@
                             {{ sight.description }}
                         </p>
                         <a href="{{ sight.url_sight }}">Узнать маршрут</a>
+                    </div>
+                    <div class="review-block">
+                    {% if user.is_authenticated %}
+                        {% if has_reviewed %}
+                            <p>Вы уже оставили отзыв для этого места.</p>
+                        {% else %}
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit">Отправить отзыв</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <p><a href="{% url 'auth' %}">Войдите</a>, чтобы оставить отзыв.</p>
+                    {% endif %}
+                    </div>
+                    <div class="all_review">
+                        <ul>
+                        {% for i in reviews %}
+                            <li>
+                                <img class="avatar-reviews" src="{{ i.username.image.url }}">
+                                <p class="username-review">{{i.username}}</p>
+                                <p class="grade-review">{{i.grade}} &#10024</p>
+                                <p class="description-review">{{i.description}}</p>
+                            </li>
+                        {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>

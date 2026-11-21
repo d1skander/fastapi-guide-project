@@ -1,0 +1,120 @@
+/* Премиальная темная палитра (идентична остальным страницам) */
+:root {
+  --bg: #111214;              /* Почти черный, глубокий графит */
+  --surface: #181a1e;         /* Темно-серый для плашки статуса */
+  --border: #2a2d35;          /* Тонкая строгая обводка */
+  
+  --text-main: #f8fafc;       /* Чистый белый */
+  --text-muted: #94a3b8;      /* Приглушенный серый для описания */
+  
+  --accent-green: #14452f;    /* Благородный темно-зеленый (кнопка Назад) */
+  --accent-green-hover: #1b5c3f;
+  --accent-blue: #162a45;     /* Глубокий темно-синий (отлив статуса) */
+  --accent-brown: #2e211b;    /* Темно-коричневый (тонкий акцент) */
+  
+  --radius: 8px;
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Центрирование всего контента по центру экрана */
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+/* Код ошибки ({{ status }}) — визуальный центр экрана */
+h2 {
+  order: 1;
+  font-size: clamp(4rem, 12vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  background: linear-gradient(145deg, var(--surface), #131518);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--accent-brown);
+  border-radius: var(--radius);
+  padding: 1.25rem 2.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+  animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Заголовок ("Ой, случилась ошибка!") */
+h1 {
+  order: 2;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+/* Текст ошибки ({{ error }}) */
+p {
+  order: 3;
+  max-width: 480px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 2.25rem;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
+}
+
+/* Ссылка "Назад" в стиле фирменной кнопки */
+a {
+  order: 4;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 0.7rem 1.8rem;
+  background-color: var(--accent-green);
+  color: var(--text-main);
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+  animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+a:hover {
+  background-color: var(--accent-green-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+a:active {
+  transform: translateY(0);
+}
+
+/* Легкая, дорогая анимация появления без нагрузки на CPU */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

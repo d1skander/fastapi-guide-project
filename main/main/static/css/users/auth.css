@@ -1,0 +1,233 @@
+/* Премиальная темная палитра (идентична остальным страницам проекта) */
+:root {
+  --bg: #111214;              /* Почти черный, глубокий графит */
+  --surface: #181a1e;         /* Темно-серый для карточки авторизации */
+  --surface-elevated: #131518;/* Глубокий темный для полей ввода */
+  --border: #2a2d35;          /* Тонкая строгая обводка */
+  
+  --text-main: #f8fafc;       /* Чистый белый */
+  --text-muted: #94a3b8;      /* Приглушенный серый */
+  
+  --accent-green: #14452f;    /* Благородный темно-зеленый (кнопка Войти) */
+  --accent-green-hover: #1b5c3f;
+  --accent-blue: #162a45;     /* Глубокий темно-синий (фокус полей) */
+  --accent-brown: #2e211b;    /* Темно-коричневый (тонкий акцент сверху карточки) */
+  
+  --radius: 8px;
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+/* Навигация */
+.menu {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.menu ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color var(--transition);
+}
+
+.menu a:hover {
+  color: var(--text-main);
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-main);
+  transition: width var(--transition);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* Карточка формы авторизации строго по центру */
+form {
+  margin: auto;
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(145deg, var(--surface), #14161a);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent-brown);
+  border-radius: var(--radius);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.65);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Аккуратный заголовок через CSS без изменения HTML */
+form::before {
+  content: "Вход в систему";
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+/* Поддержка дефолтного табличного вывода Django {{ form }} */
+form table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+form tbody,
+form tr {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+form tr {
+  margin-bottom: 1rem;
+  gap: 0.4rem;
+}
+
+form tr:last-child {
+  margin-bottom: 0;
+}
+
+form th,
+form td {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+}
+
+/* Поддержка вывода через <p> или <div> */
+form p,
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+/* Подписи полей */
+form label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+/* Поля ввода */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+  width: 100%;
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.72rem 0.9rem;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+form input:focus {
+  border-color: #3b5984;
+  box-shadow: 0 0 0 3px rgba(22, 42, 69, 0.65);
+}
+
+/* Стилизация ошибок валидации Django (неверный логин или пароль) */
+ul.errorlist {
+  list-style: none;
+  background-color: rgba(46, 33, 27, 0.75);
+  border: 1px solid #5c3a2e;
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.84rem;
+  color: #fca5a5;
+  margin-bottom: 0.5rem;
+}
+
+.helptext {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Кнопка "Войти" */
+form button[type="submit"] {
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-green);
+  color: var(--text-main);
+  width: 100%;
+  margin-top: 0.35rem;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+form button[type="submit"]:hover {
+  background-color: var(--accent-green-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

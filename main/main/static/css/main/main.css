@@ -1,0 +1,240 @@
+/* Премиальная темная палитра */
+:root {
+  --bg: #111214;              /* Почти черный, глубокий графит */
+  --surface: #181a1e;         /* Темно-серый для карточек и шапки */
+  --surface-hover: #1f2228;   /* Чуть светлее при наведении */
+  --border: #2a2d35;          /* Тонкая строгая обводка */
+  
+  --text-main: #f8fafc;       /* Чистый белый для заголовков */
+  --text-muted: #94a3b8;      /* Приглушенный серый для навигации */
+  
+  --accent-green: #14452f;    /* Благородный темно-зеленый (основные кнопки) */
+  --accent-green-hover: #1b5c3f;
+  --accent-blue: #162a45;     /* Глубокий темно-синий (второстепенные акценты) */
+  --accent-brown: #2e211b;    /* Темно-коричневый (теплый оттенок для рамок/кнопки отмены) */
+  
+  --radius: 8px;              /* Строгие, слегка скругленные углы */
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Сетка макета: шапка (nav + auth) и основной контент */
+  display: grid;
+  grid-template-areas:
+    "nav auth"
+    "main main";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  gap: 2.5rem 1rem;
+}
+
+/* Навигация и авторизация */
+.menu { grid-area: nav; }
+.auth { grid-area: auth; }
+
+.menu ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.menu a, .auth a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color var(--transition);
+}
+
+.menu a:hover, .auth a:hover {
+  color: var(--text-main);
+}
+
+/* Тонкое подчеркнутое свечение при наведении на ссылки меню */
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-main);
+  transition: width var(--transition);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* Кнопки (темно-зеленый премиальный акцент) */
+button, #redirectDialog a {
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.4rem;
+  background-color: var(--accent-green);
+  color: var(--text-main);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+button:hover, #redirectDialog a:hover {
+  background-color: var(--accent-green-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Модальное окно <dialog> */
+#redirectDialog {
+  margin: auto;
+  padding: 2.2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--surface), #131518);
+  color: var(--text-main);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition: opacity var(--transition), transform var(--transition), display var(--transition) allow-discrete;
+}
+
+#redirectDialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 280px;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@starting-style {
+  #redirectDialog[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+#redirectDialog::backdrop {
+  background: rgba(5, 6, 8, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+/* Вторая ссылка в модалке (Вход) — глубокий темно-синий */
+#redirectDialog a:nth-of-type(2) {
+  background-color: var(--accent-blue);
+}
+
+#redirectDialog a:nth-of-type(2):hover {
+  background-color: #1e3a5f;
+}
+
+/* Кнопка выхода/отмены — строгий темно-коричневый */
+#editCancel {
+  background-color: var(--accent-brown);
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+#editCancel:hover {
+  background-color: #3d2c24;
+  color: var(--text-main);
+}
+
+/* Сетка карточек */
+.sight {
+  grid-area: main;
+  width: 100%;
+}
+
+.sight ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+.sight li {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+  transition: transform var(--transition), border-color var(--transition), background-color var(--transition), box-shadow var(--transition);
+}
+
+/* При наведении карточка слегка приподнимается, а рамка подсвечивается темно-синим/серым отливом */
+.sight li:hover {
+  transform: translateY(-6px);
+  background-color: var(--surface-hover);
+  border-color: #3b4d66;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+}
+
+.image-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: #0d0e10;
+  border-bottom: 1px solid var(--border);
+}
+
+.image-wrapper a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.92); /* Слегка приглушаем яркость фото, чтобы не слепило в темной теме */
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+
+.sight li:hover .image-wrapper img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+.title {
+  padding: 1.15rem 1.25rem;
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  transition: color var(--transition);
+}

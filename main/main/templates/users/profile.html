@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
     <link rel="stylesheet" href="{% static 'css/users/profile.css' %}">
+    <title>Личный кабинет</title>
 </head>
 <body>
     <nav class="menu">
@@ -15,11 +15,15 @@
         </ul>
     </nav>
 
+    <div class="avatar">
+        <img src="{{ image }}">
+    </div>
+
     <div class="user">
         <ul>
             <li>{{ id }}</li>
             <li>{{ username }}</li>
-            {% if mail == None %}
+            {% if email is None %}
                 <li><p>Добавьте электронную почту</p></li>
             {% else %}
                 <li>{{ email }}</li>
@@ -35,7 +39,7 @@
                 <form method="post" action="{% url 'new_username' %}">
                     {% csrf_token %}
                     <dl>
-                        {{ user_form.username }}
+                        {{ username_form }}
                     </dl>
                     <button type="submit">Изменить</button>
                 </form>
@@ -46,10 +50,21 @@
                 <form method="post" action="{% url 'new_email' %}">
                     {% csrf_token %}
                     <dl>
-                        {{ user_form.email }}
+                        {{ email_form }}
                     </dl>
-                    <button type="submit">Изменить</button>
+                    <button id="editEmailButton" type="submit">Изменить</button>
                 </form>
+
+                    <dialog id="codeEmailWindow">
+                        <form method="post" action="{% url 'new_email' %}">
+                            {% csrf_token %}
+                            <dl>
+                                {{ email_code_form }}
+                            </dl>
+                            <button id="editCodeButton" type="submit">Потвердить</button>
+                        </form>
+                        <button id="editCodeCancel" type="reset">Отменить</button>
+                    </dialog>
             </details>
 
             <details id="detailsPassword">
@@ -57,7 +72,18 @@
                 <form method="post" action="{% url 'new_password' %}">
                     {% csrf_token %}
                     <dl>
-                        {{ password_form.password }}
+                        {{ password_form }}
+                    </dl>
+                    <button type="submit">Изменить</button>
+                </form>
+            </details>
+
+            <details id="detailsAvatar">
+                <summary>Изменить аватар</summary>
+                <form method="post" action="{% url 'new_avatar' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <dl>
+                        {{ avatar_form }}
                     </dl>
                     <button type="submit">Изменить</button>
                 </form>

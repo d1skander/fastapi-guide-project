@@ -34,6 +34,7 @@ urlpatterns = [
     path('edit_password/', views.edit_password, name='new_password'),
     path('edit_username/', views.edit_username, name='new_username'),
     path('exit/', views.exit, name='exit'),
+    path('edit_avatar/', views.edit_avatar, name="new_avatar")
 ]
 
 

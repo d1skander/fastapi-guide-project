@@ -1,0 +1,167 @@
+/* Премиальная темная палитра (идентична главной странице) */
+:root {
+  --bg: #111214;              /* Почти черный, глубокий графит */
+  --surface: #181a1e;         /* Темно-серый для легкой подложки */
+  
+  --text-main: #f8fafc;       /* Чистый белый */
+  --text-muted: #94a3b8;      /* Приглушенный серый для навигации */
+  --text-desc: #cbd5e1;       /* Мягкий светло-серый для текста */
+  
+  --accent-green: #14452f;
+  --accent-blue: #162a45;
+  --accent-brown: #2e211b;
+  
+  --radius: 8px;
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  
+  display: flex;
+  flex-direction: column;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  gap: 3rem;
+}
+
+/* Навигация */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 40px;
+}
+
+.menu li {
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color var(--transition);
+}
+
+.menu a:hover {
+  color: var(--text-main);
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-main);
+  transition: width var(--transition);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* Контейнер раздела "О нас" */
+.info {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.info ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.info li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.75rem;
+  border: none;
+  background: transparent;
+}
+
+/* Изображение: плавное парение вверх-вниз */
+.image {
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: none;
+  background-color: #0d0e10;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+  will-change: transform;
+  animation: floatImage 6s ease-in-out infinite;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.95);
+}
+
+/* Текст описания: парит чуть мягче и с легким смещением по фазе */
+.title {
+  width: 100%;
+  max-width: 680px;
+  padding: 0 0.5rem;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  letter-spacing: 0.015em;
+  color: var(--text-desc);
+  will-change: transform;
+  animation: floatText 6s ease-in-out -1.5s infinite;
+}
+
+/* Анимация парения для картинки */
+@keyframes floatImage {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+/* Анимация парения для текста */
+@keyframes floatText {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+/* Отключение движения, если у пользователя включено "Уменьшение движения" в системе */
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .title {
+    animation: none;
+  }
+}

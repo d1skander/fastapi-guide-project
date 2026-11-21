@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
 import os
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'main'
+    'main',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
@@ -143,3 +150,23 @@ MEDIA_ROOT = os.path.join(
 
 
 AUTH_USER_MODEL = 'app.CustomUser'
+
+
+MAILERS = {
+    'default': {
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': 'smtp.mail.ru',
+            'port': 465,
+            'use_ssl': True,
+            'username': os.getenv('EMAIL_HOST_USER'),      # Ваш адрес почты (или из MailConfig)
+            'password': os.getenv('EMAIL_HOST_PASSWORD'),       # Пароль для внешнего приложения (или из MailConfig)
+        },
+    }
+}
+
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+SERVER_EMAIL = os.getenv('EMAIL_HOST_PASSWORD')
+
+
+LOGIN_URL = '/auth/'

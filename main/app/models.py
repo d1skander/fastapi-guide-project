@@ -33,7 +33,6 @@ class ReviewModel(models.Model):
     description = models.TextField(default="Описание отсутсвует.", max_length=500)
 
 
-
 class InformationModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.TextField(default="Описание отсутсвует.", max_length=500)

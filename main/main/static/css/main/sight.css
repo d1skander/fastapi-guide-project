@@ -1,0 +1,326 @@
+/* Премиальная темная палитра (единая для всего проекта) */
+:root {
+  --bg: #111214;              /* Почти черный, глубокий графит */
+  --surface: #181a1e;         /* Темно-серый для основной карточки */
+  --surface-elevated: #1e2126;/* Чуть светлее для плашек отзывов и полей ввода */
+  --border: #2a2d35;          /* Тонкая строгая обводка */
+  
+  --text-main: #f8fafc;       /* Чистый белый */
+  --text-muted: #94a3b8;      /* Приглушенный серый */
+  --text-desc: #cbd5e1;       /* Мягкий светло-серый для описания */
+  
+  --accent-green: #14452f;    /* Благородный темно-зеленый (кнопки) */
+  --accent-green-hover: #1b5c3f;
+  --accent-blue: #162a45;     /* Глубокий темно-синий */
+  --accent-brown: #2e211b;    /* Темно-коричневый (акцент для рейтинга) */
+  
+  --radius: 8px;
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, body.bg-light {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg) !important;
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  
+  display: flex;
+  flex-direction: column;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  gap: 2.5rem;
+}
+
+/* Навигация */
+.menu {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.menu ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color var(--transition);
+}
+
+.menu a:hover {
+  color: var(--text-main);
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-main);
+  transition: width var(--transition);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* Контейнер детальной страницы */
+.container {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Главное фото достопримечательности */
+.card-img-top {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 460px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border);
+  filter: brightness(0.94);
+}
+
+/* Тело карточки (заголовок, описание, кнопка маршрута) */
+.card-body {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+}
+
+.card-text, .text-secondary {
+  color: var(--text-desc) !important;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+}
+
+/* Кнопка "Узнать маршрут" и кнопка отправки формы */
+.card-body > a,
+.review-block button {
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0.65rem 1.5rem;
+  background-color: var(--accent-green);
+  color: var(--text-main);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.5rem;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.card-body > a:hover,
+.review-block button:hover {
+  background-color: var(--accent-green-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Блок добавления отзыва и стилизация Django {{ form.as_p }} */
+.review-block {
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  background-color: #14161a;
+  border-bottom: 1px solid var(--border);
+}
+
+.review-block > p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.review-block > p a {
+  color: var(--text-main);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--transition);
+}
+
+.review-block > p a:hover {
+  color: #60a5fa;
+}
+
+.review-block form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.review-block form p {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.review-block label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.review-block input[type="text"],
+.review-block input[type="number"],
+.review-block select,
+.review-block textarea {
+  width: 100%;
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.9rem;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.review-block textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.review-block input:focus,
+.review-block select:focus,
+.review-block textarea:focus {
+  border-color: #3b5984;
+  box-shadow: 0 0 0 3px rgba(22, 42, 69, 0.6);
+}
+
+.review-block button {
+  align-self: flex-start;
+}
+
+/* Список всех отзывов */
+.all_review {
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.all_review ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Сетка отдельного отзыва: аватарка слева, имя и оценка сверху, текст снизу */
+.all_review li {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  grid-template-areas:
+    "avatar name grade"
+    "avatar desc desc";
+  gap: 0.4rem 1rem;
+  align-items: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 110px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.all_review li:hover {
+  border-color: #3b4d66;
+  transform: translateY(-2px);
+}
+
+/* Круглая сжатая аватарка */
+.avatar-reviews {
+  grid-area: avatar;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: #0d0e10;
+  align-self: start;
+}
+
+.username-review {
+  grid-area: name;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+}
+
+/* Плашка оценки с темно-коричневым премиальным оттенком */
+.grade-review {
+  grid-area: grade;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f8fafc;
+  background-color: var(--accent-brown);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.description-review {
+  grid-area: desc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-desc);
+  margin-top: 0.25rem;
+}
+
+/* Адаптация отзывов под узкие экраны смартфонов */
+@media (max-width: 480px) {
+  .all_review li {
+    grid-template-columns: 38px 1fr auto;
+    gap: 0.35rem 0.75rem;
+    padding: 1rem;
+  }
+
+  .avatar-reviews {
+    width: 38px;
+    height: 38px;
+  }
+}
