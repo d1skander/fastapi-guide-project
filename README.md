@@ -9,7 +9,7 @@
 ## Использованные технологии
 
 - Backend
-    - Django
+    - django
 
 - Frontend
     - html
@@ -17,7 +17,7 @@
     - javascript
 
 - Database
-    - sqlite
+    - postgresql
 
 ## Готовые команды
 - uv run main/manage.py runserver
