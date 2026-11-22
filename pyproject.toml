@@ -9,5 +9,6 @@ dependencies = [
     "django-cleanup>=9.0.0",
     "dotenv>=0.9.9",
     "pillow>=13.0.0",
+    "psycopg2>=2.9.13",
     "pydantic-settings>=2.16.2",
 ]
