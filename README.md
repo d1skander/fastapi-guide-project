@@ -10,7 +10,6 @@
 
 - Backend
     - Django
-    - Pydantic(pydantic-settings)
 
 - Frontend
     - html
@@ -25,3 +24,4 @@
 - uv run main/manage.py migrate
 - uv run main/manage.py makemigrations
 - uv run main/manage.py createsuperuser
+- uv run main/manage.py check --deploy
